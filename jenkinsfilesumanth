@@ -1,1 +1,41 @@
+node
+{
+  
+  def mavenHome = tool name: "mavan3.8.1"
+  
+  properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * *')])])
+    
+  stage('CheckOutCode'){
+  git branch: 'development', credentialsId: '795c081d-50da-4356-b551-af6667f70b9d', url: 'https://github.com/sumanthdevops-ec-applications/maven-web-application.git'
+  }
+  
+  stage('Build'){
+  sh "${mavenHome}/bin/mvn clean package"
+  }
+/*
+ stage('ExecuteSoanrQubeReport'){
+  sh "${mavenHome}/bin/mvn clean sonar:sonar"
+  }
+  
+  stage('UploadArtifactIntoNexusRepo'){
+  sh "${mavenHome}/bin/mvn clean deploy"
+  }
+  
+  stage('DeploytheAppintoTomcat')
+  {
+    sshagent(['58610c9f-6fe9-49c1-9ed5-25ba107e88ed']) 
+     {
+     sh "scp-o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@18.119.1.212:/opt/apache-tomcat-9.0.58/webapps/"
+  }
+   }
+  
+ 
+  stage('SendEmailNotification'){
+   mail bcc: 'devopstrainingblr@gmail.com', body: '''Build Over !!
 
+   Regards,
+   Mithun Technologies,
+   9980923226''', cc: 'devopstrainingblr@gmail.com', from: '', replyTo: '', subject: 'Build Over!!', to: 'devopstrainingblr@gmail.com'
+  }
+  */
+}//Closing brancket for Node 
